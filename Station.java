@@ -3,36 +3,38 @@ public class Station
     protected String name = "";
     protected String lineColor = "";
     protected boolean service = true;
-    protected String previouString = "none";
-    protected String nexString = "none";
+    protected Station previousStation;
+    protected Station nextStation;
 
     public Station(String lineColor, String name)
     {
         this.name = name;
         this.lineColor = lineColor;
+        previousStation.name = "none";
+        nextStation.name = "none";
     }
 
     public void addPrev(Station station)
     {
-        this.previouString = station.name;
-        station.nexString = this.name;
+        this.previousStation = station;
+        station.nextStation = this;
     }
 
-    public void nexString(Station station)
+    public void addNext(Station station)
     {
-        this.nexString = station.name;
-        station.previouString = this.name;
+        this.nextStation = station;
+        station.previousStation = this;
     }
 
     public void makeEnd()
     {
-        if (!this.nexString.equals("none"))
+        if (!this.nextStation.name.equals("none"))
         {
-            this.previouString = this.nexString;
+            this.previousStation = this.nextStation;
         }
-        else if (!this.previouString.equals("none"))
+        else if (!this.previousStation.name.equals("none"))
         {
-            this.nexString = this.previouString;
+            this.nextStation = this.previousStation;
         }
     }
 
@@ -46,6 +48,6 @@ public class Station
 
     public String toString()
     {
-        return "STATION " + this.name + ": " + this.lineColor + " line, in service: " + this.service + ", previous station: " + this.previouString + ", next station: " + this.nexString;
+        return "STATION " + this.name + ": " + this.lineColor + " line, in service: " + this.service + ", previous station: " + this.previousStation.name + ", next station: " + this.nextStation.name;
     }
 }
