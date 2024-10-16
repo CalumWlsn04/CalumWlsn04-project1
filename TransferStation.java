@@ -20,4 +20,20 @@ public class TransferStation extends Station{
         station.previousStation = this;
         stationList.add(station);
     }
+
+    public String printHelp(ArrayList<Station> stationList)
+    {
+        String total = "\n\tTransfers: \n";
+        for (int i = 0; i < stationList.size(); i++)
+        {
+            total = "\t" + stationList.get(i).toString() + "\n " + total;
+        }
+
+        return total;
+    }
+
+    public String toString()
+    {
+        return super.toString() + printHelp(stationList);
+    }
 }
