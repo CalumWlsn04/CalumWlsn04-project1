@@ -11,8 +11,6 @@ public class Station
     {
         this.name = name;
         this.lineColor = lineColor;
-        //previousStation.name = "none";
-        //next.name = "none";
     }
 
     public void addPrev(Station station)
@@ -60,7 +58,6 @@ public class Station
     {
         if (this.lineColor.equals(station.lineColor) && this.name.equals(station.name))
         {
-            System.out.println("Right here!");
             return true;
         }
         else
@@ -70,93 +67,45 @@ public class Station
     int tripLengthRecursive(Station current, Station dest)
     {
         int totalMovement = 0;
-        TransferStation temp = new TransferStation("blue/pink", "Transfer");
+        TransferStation temp = new TransferStation("blue/pink", "Transfer"); //These are two temporary specific types of stations, which we will be using to compare Class types
         EndStation endy = new EndStation("temp", "temp");
-        Station temp2;
 
-        temp2 = (Station) temp;
-        System.out.println(temp2.getClass());
-        
-        System.out.println("THis is the dest name: " + dest.name + ", and the dest color: " + dest.lineColor);
-        System.out.println("This is the current station: " + current.name + ", and this is the current station type: " + current.getClass() + ", and this is the current linecolor: " + current.lineColor);
-        System.out.println("These are the two conditions: " + current.getClass().equals(temp.getClass()) + ", " + !current.lineColor.equals(dest.lineColor));
-
-        if (current.equals(dest))
+        if (current.equals(dest)) //We have the main base case here
             return totalMovement;
-        else if (current.getClass().equals(temp.getClass()) && !current.lineColor.equals(dest.lineColor))
+        else if (current.getClass().equals(temp.getClass()) && !current.lineColor.equals(dest.lineColor)) //If its a transferStation and the current line color is not equal to the destinations final color
         {
             temp = (TransferStation) current;
-            System.out.println("This is the size of the temp otherstations arraylist: " + temp.otherStations.size());
+
             int checker = totalMovement;
             for (int i = 0; i < temp.otherStations.size(); i++)
             {
-                System.out.println("This is dest color: " + dest.lineColor);
-                System.out.println("This the station color: " + temp.otherStations.get(i).lineColor);
-                System.out.println("Station Name: " + temp.otherStations.get(i).name + ", True? " + temp.otherStations.get(i).lineColor.equals(dest.lineColor));
-                System.out.println("WHY!!!" + temp.otherStations.get(i).equals(dest));
 
-                if(temp.otherStations.get(i).equals(dest))
+                if(temp.otherStations.get(i).equals(dest)) //Another potential base case
                 {
                     return totalMovement + 1;
                 }
                 else if(temp.otherStations.get(i).lineColor.equals(dest.lineColor))
                 {
-                    System.out.println("In here!");
-                    if (!temp.otherStations.get(i).getClass().equals(endy.getClass()))
+                    if (!temp.otherStations.get(i).getClass().equals(endy.getClass())) //If its not an endstation
                     {
-                        System.out.println("Made it here!!!");
-                        System.out.println("This is temp.otherstations.get(i).next.name is " + temp.otherStations.get(i).next.name);
-                        if (!temp.otherStations.get(i).next.name.equals(current.name))
+                        if (!temp.otherStations.get(i).next.name.equals(current.name)) //If the next station for the station in the list is not equal to the current station
                         {
-                            System.out.println("Th");
-                            totalMovement = totalMovement + 1 + tripLengthRecursive(temp.otherStations.get(i), dest);
-                            i = temp.otherStations.size() - 1;
+                            totalMovement = totalMovement + 1 + tripLengthRecursive(temp.otherStations.get(i), dest); //Add another movement and then call the recursive loop
+                            i = temp.otherStations.size() - 1; //We end the loop here
                         }
                     }
                 }
             }
-            if (checker == totalMovement)
+            if (checker == totalMovement) //This is basically for if there has been no movement after iterating through the whole for loop, as in no connections that specifically fit into the category we are looking for at the time
             {
-                totalMovement = totalMovement + 1 + tripLengthRecursive(current.next, dest);
+                totalMovement = totalMovement + 1 + tripLengthRecursive(current.next, dest); //We just move on normally in the case we can't find anything in the transferStation
             }
         }
-        else
+        else //This is saying if its not equal to the dest, but also not a transferstation, this is built on the idea of good input, as in no faulty endStations
         {
-            totalMovement = totalMovement + 1 + tripLengthRecursive(current.next, dest);
+            totalMovement = totalMovement + 1 + tripLengthRecursive(current.next, dest); //Move through the current line
         }
-
-
-        /*if (current.equals(dest))
-            return totalMovement;
-        else if (current.name.equals("Metro Center"))
-        {
-            temp = (TransferStation) current;
-
-            if (dest.lineColor.equals("orange"))
-            {
-                totalMovement = totalMovement + 1 + tripLengthRecursive(current.next, dest);
-            }
-            else
-            { 
-                for (int i = 0; i < temp.otherStations.size(); i++)
-                {
-                    if(temp.otherStations.get(i).lineColor == dest.lineColor && !temp.otherStations.get(i).next.name.equals("Metro Center"))
-                    {
-                        totalMovement = totalMovement + 1 + tripLengthRecursive(temp.otherStations.get(i), dest);
-                        i = temp.otherStations.size() - 1;
-                    }
-                }
-            }
-        }
-        else
-        {
-            System.out.println("This is the current station: " + current.name);
-            totalMovement = totalMovement + 1 + tripLengthRecursive(current.next, dest);
-        }
-        
-        System.out.println("This is the totalMovement: " + totalMovement);*/
-
-        return totalMovement;
+        return totalMovement; //Return the totalMovement at the end
     }
 
     int tripLength(Station dest)
