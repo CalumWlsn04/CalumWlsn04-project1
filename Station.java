@@ -7,30 +7,30 @@ public class Station
     protected Station next = null;
     protected boolean flag = false;
 
-    public Station(String lineColor, String name)
+    public Station(String lineColor, String name) //The Station Constructor
     {
         this.name = name;
         this.lineColor = lineColor;
     }
 
-    public void addPrev(Station station)
+    public void addPrev(Station station) //Add the previous station
     {
         this.previousStation = station;
         station.next = this;
     }
 
-    public void addNext(Station station)
+    public void addNext(Station station) //Add the next station
     {
         this.next = station;
         station.previousStation = this;
     }
 
-    public boolean isAvailable()
+    public boolean isAvailable() //Return availablility
     {
         return service;
     }
 
-    public void switchAvailable()
+    public void switchAvailable() //Switch the availability of the line
     {
         if (service == true)
             service = false;
@@ -40,26 +40,24 @@ public class Station
 
     public void connect(Station station)
     {
-        if (this.next == null)
+        if (this.next == null) //The priority is to connect the next station
         {
             this.next = station;
             station.previousStation = this;
         }
-        else if (this.previousStation == null)
+        else if (this.previousStation == null) //If the next station is already full, then add a previous station
         {
             this.previousStation = station;
             station.next = this;
         }
         else
-            System.out.println("Failed to connect");
+            System.out.println("Failed to connect"); //This only happens if there is no space for another station
     }
 
     public boolean equals(Station station)
     {
-        if (this.lineColor.equals(station.lineColor) && this.name.equals(station.name))
-        {
+        if (this.lineColor.equals(station.lineColor) && this.name.equals(station.name)) //Checks for equality based on linecolor and name of stations
             return true;
-        }
         else
             return false;
     }
