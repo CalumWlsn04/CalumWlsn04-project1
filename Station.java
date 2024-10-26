@@ -79,7 +79,6 @@ public class Station
             int checker = totalMovement;
             for (int i = 0; i < temp.otherStations.size(); i++)
             {
-
                 if(temp.otherStations.get(i).equals(dest)) //Another potential base case
                 {
                     return totalMovement + 1;

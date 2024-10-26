@@ -2,38 +2,38 @@ import java.util.*;
 
 public class TransferStation extends Station{
     
-    ArrayList<Station> stationList = new ArrayList<Station>();
+    ArrayList<Station> otherStations = new ArrayList<Station>();
 
     public TransferStation(String lineColor, String name)
     {
         super(lineColor, name);
     }
 
-    public void addPrev(Station station)
+    public void addTransferStationPrev(Station station)
     {
-        station.nextStation = this;
-        stationList.add(station);
+        station.next = this;
+        otherStations.add(station);
     }
 
-    public void addNext(Station station)
+    public void addTransferStationNext(Station station)
     {
         station.previousStation = this;
-        stationList.add(station);
+        otherStations.add(station);
     }
 
-    public String printHelp(ArrayList<Station> stationList)
+    public String printHelp(ArrayList<Station> otherStations)
     {
-        String total = "\n\tTransfers: \n";
-        for (int i = 0; i < stationList.size(); i++)
+        String total = "";
+        for (int i = 0; i < otherStations.size(); i++)
         {
-            total = "\t" + stationList.get(i).toString() + "\n " + total;
+            total = total + "\t" + otherStations.get(i).toString() + "\n";
         }
-
+        total = "\n\tTransfers: \n" + total;
         return total;
     }
 
     public String toString()
     {
-        return super.toString() + printHelp(stationList);
+        return "TRANSFER" + super.toString() + printHelp(otherStations);
     }
 }

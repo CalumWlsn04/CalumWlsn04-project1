@@ -32,8 +32,8 @@ public class MetroSimulator{
 		makeRedLine();
 		makePurpleLine();
 
-		//int stops = va_square.tripLength(metro_center);
-		//System.out.println("There are " + stops + " stops between Virginia Square and Metro Center");
+		int stops = va_square.tripLength(metro_center);
+		System.out.println("There are " + stops + " stops between Virginia Square and Metro Center");
 	}
 
 	public static void initialize(){
@@ -76,8 +76,6 @@ public class MetroSimulator{
 		smithsonian.makeEnd();
 		va_square.makeEnd();
 
-		//connect the other stations here
-
 		return va_square;
 
 	}
@@ -85,14 +83,10 @@ public class MetroSimulator{
 	public static EndStation makeRedLine(){
 		woodley_park.connect(dupont_circle);
 		dupont_circle.connect(farragut_north);
-		//metro_center.addTransferStationPrev(farragut_north);
-		//metro_center.addTransferStationNext(gallery_place);
-		farragut_north.connect(metro_center);
-		metro_center.connect(gallery_place);
 		gallery_place.connect(judiciary_square);
 		woodley_park.makeEnd();
 		judiciary_square.makeEnd();
-		//connect the other stations here
+
 		metro_center.addTransferStationPrev(farragut_north);
 		metro_center.addTransferStationNext(gallery_place);
 
@@ -102,14 +96,11 @@ public class MetroSimulator{
 	public static EndStation makePurpleLine(){
 		s1.connect(s2);
 		s2.connect(s3);
-		//metro_center.addTransferStationPrev(s3);
-		//metro_center.addTransferStationNext(s4);
-		s3.connect(metro_center);
 		s4.connect(s5);
 		s5.makeEnd();
 		s1.makeEnd();
-		//connect the other stations here
-		metro_center.addTransferStationPrev(s3); //Trying to figure out why this is returning a bad thing
+
+		metro_center.addTransferStationPrev(s3); 
 		metro_center.addTransferStationNext(s4);
 
 		return s1;

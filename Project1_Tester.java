@@ -328,5 +328,4 @@ public class Project1_Tester {
     assertEquals(4, MetroSimulator.foggy_bottom.tripLength(MetroSimulator.s4));
     assertEquals(3, MetroSimulator.s2.tripLength(MetroSimulator.gallery_place));
   }
-
 }
